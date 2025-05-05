@@ -36,16 +36,16 @@ This project is a web scraping application that extracts articles from the Blog 
 
 
 2. Install dependencies:
-
-pip install -r requirements.txt
+   ```bash
+   pip install -r requirements.txt
 
 3. Run the scraper
-
-python main.py
+    ```bash
+      python main.py
 
 4. Start the Flask app:
-
-python frontend/app.py
+    ```bash
+   python frontend/app.py
 
 
    
