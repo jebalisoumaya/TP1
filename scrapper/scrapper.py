@@ -94,14 +94,16 @@ def scrape_article(url):
 
     # Images
     images = []
-    for img in soup.find_all('img'):
-        src = img.get('src') or img.get('data-src')
-        if src:
-            alt = img.get('alt') or img.get('title') or ''
-            images.append({
-                "url": src,
-                "legende": alt
-            })
+    article_tag = soup.find('article')  # Locate the <article> tag
+    if article_tag:
+        for img in article_tag.find_all('img'):  # Find all <img> tags within the article
+            src = img.get('src') or img.get('data-src')
+            if src:
+                alt = img.get('alt') or img.get('title') or ''
+                images.append({
+                    "url": src,
+                    "legende": alt
+                })
 
     body_content = ""
     body_div = soup.find('div', class_='entry-content row justify-content-center')
