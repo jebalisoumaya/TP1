@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Scraper un article</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <h1>🔍 Scraper un article</h1>
+    <form method="post" action="/">
+      <label for="url">Entrez l'URL de l'article :</label>
+      <input type="text" id="url" name="url" required />
+      <button type="submit">Scraper</button>
+    </form>
+
+    <h2>Exemples d'URL :</h2>
+    <ul>
+      <li>
+        <a
+          href="https://www.blogdumoderateur.com/duolingo-ia-concurrence-google/"
+          target="_blank"
+        >
+          https://www.blogdumoderateur.com/duolingo-ia-concurrence-google/
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://www.blogdumoderateur.com/50-marques-francaises-puissantes-classement/"
+          target="_blank"
+        >
+          https://www.blogdumoderateur.com/50-marques-francaises-puissantes-classement/
+        </a>
+      </li>
+    </ul>
+  </body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catégories et Articles</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #000; /* Black background */
+        color: #fff; /* White text */
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        text-align: center;
+        padding: 20px;
+        background-color: #111; /* Slightly lighter black for header */
+        margin: 0;
+        border-bottom: 2px solid #444;
+      }
+
+      .category-buttons {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 20px 0;
+      }
+
+      .category-buttons button {
+        background-color: #444; /* Dark gray button */
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .category-buttons button:hover {
+        background-color: #666; /* Lighter gray on hover */
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      li {
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #222; /* Dark gray for list items */
+        border: 1px solid #444;
+        border-radius: 5px;
+      }
+
+      li strong {
+        font-size: 1.2em;
+        color: #fff;
+      }
+
+      li p {
+        margin: 5px 0;
+        color: #ccc; /* Light gray for text */
+      }
+
+      form {
+        margin-top: 10px;
+      }
+
+      button.scrape-btn {
+        background-color: #444; /* Dark gray button */
+        color: #fff;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button.scrape-btn:hover {
+        background-color: #666; /* Lighter gray on hover */
+      }
+
+      a {
+        display: block;
+        text-align: center;
+        margin: 20px auto;
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.2em;
+        padding: 10px 20px;
+        background-color: #444;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        width: fit-content;
+      }
+
+      a:hover {
+        background-color: #666;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+    <script>
+      function filterCategory(categoryName) {
+        const allCategories = document.querySelectorAll(".category");
+        allCategories.forEach((category) => {
+          if (
+            category.dataset.name === categoryName ||
+            categoryName === "all"
+          ) {
+            category.classList.remove("hidden");
+          } else {
+            category.classList.add("hidden");
+          }
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <h1>📂 Catégories et Articles</h1>
+
+    <!-- Dynamic Category Buttons -->
+    <div class="category-buttons">
+      <button onclick="filterCategory('all')">Toutes les catégories</button>
+      {% for category in categories %}
+      <button onclick="filterCategory('{{ category.name }}')">
+        {{ category.name }}
+      </button>
+      {% endfor %}
+    </div>
+
+    <!-- Categories and Articles -->
+    <ul>
+      {% for category in categories %}
+      <li class="category" data-name="{{ category.name }}">
+        <strong>{{ category.name }}</strong>
+        <ul>
+          {% for article in category_articles[category.name] %}
+          <li>
+            <p><strong>Titre:</strong> {{ article.title }}</p>
+            <p><strong>Auteur:</strong> {{ article.author }}</p>
+            <form method="post" action="/scrape_article">
+              <input
+                type="hidden"
+                name="article_url"
+                value="{{ article.url }}"
+              />
+              <button type="submit" class="scrape-btn">
+                Scraper cet article
+              </button>
+            </form>
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <a href="/search">🔙 Retour</a>
+  </body>
+</html>
