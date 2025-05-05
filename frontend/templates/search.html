@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Résultats de recherche</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <h1>📄 Résultats de recherche</h1>
+    {% if results %}
+    <ul>
+      {% for art in results %}
+      <li>
+        <h2>{{ art.titre }}</h2>
+        <img
+          src="{{ art.thumbnail }}"
+          alt="Thumbnail"
+          style="max-width: 200px"
+        />
+        <p><strong>Auteur :</strong> {{ art.auteur }}</p>
+        <p><strong>Date de publication :</strong> {{ art.date_publication }}</p>
+        <p><strong>Catégorie :</strong> {{ art.categorie }}</p>
+        <p><strong>Nombre d'images :</strong> {{ art.images | length }}</p>
+        <p><strong>Résumé :</strong> {{ art.resume }}</p>
+        <p>
+          <strong>URL :</strong>
+          <a href="{{ art.url }}" target="_blank">{{ art.url }}</a>
+        </p>
+        <p>
+          <strong>Sous-catégories :</strong> {{ ', '.join(art.sous_categories)
+          }}
+        </p>
+        <p><strong>Images :</strong></p>
+        <ul>
+          {% for img in art.images %}
+          <li>
+            <img
+              src="{{ img.url }}"
+              alt="{{ img.legende }}"
+              style="max-width: 100px"
+            />
+            <p>{{ img.legende }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+        <hr />
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>Aucun résultat trouvé.</p>
+    {% endif %}
+  </body>
+</html>
